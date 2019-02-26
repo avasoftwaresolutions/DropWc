@@ -8,7 +8,7 @@ DropDown for React Native App!
 # Configuration
 
 | Props| Type | Value | description 
-|---------------------|--------------|-------------------------------------------------------------|--------------------:
+|---------------------|--------------|-------------------------------------------------------------|-------------------------------------:
 | onTextChange | function | this.onValueChangeList.bind(this) | Return of selected text
 | onItemSelect | function | this.onValueChangeList.bind(this) | Return selected item
 | containerStyle | object | paddingTop: 5, paddingLeft: 4, paddingBottom: 5, color: '#bbbbbb', fontSize: 16 | Style of the container
