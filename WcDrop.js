@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 
 let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-export default class WellDropDown extends Component{
+export default class WcDrop extends Component{
 	constructor(props) {
 		super(props);
 		this.state = {
