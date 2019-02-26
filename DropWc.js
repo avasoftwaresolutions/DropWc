@@ -58,15 +58,23 @@ export default class DropWc extends Component{
 	};
 
 	renderItems = (item) => {
+		let	itemStyle = styles.itemStyle,
+			itemTextStyle = styles.itemTextStyle;
+		if( this.props.itemStyle !== undefined || this.props.itemStyle !== '' ){
+			itemStyle = ...this.props.itemStyle;
+		}
+		if( this.props.itemTextStyle !== undefined || this.props.itemTextStyle !== '' ){
+			itemTextStyle = ...this.props.itemTextStyle;
+		}
 		return (
-			<TouchableOpacity style={{ ...this.props.itemStyle }} onPress={() => {
+			<TouchableOpacity style={ itemStyle } onPress={() => {
 				this.setState({ item: item, focus: false });
 				Keyboard.dismiss();
 				setTimeout(() => {
 					this.props.onItemSelect(item);
 				}, 0);
 			}}>
-				<Text style={{ ...this.props.itemTextStyle }}>{item.name}</Text>
+				<Text style={ itemTextStyle }>{item.name}</Text>
 			</TouchableOpacity>
 		);
 	};
@@ -75,7 +83,7 @@ export default class DropWc extends Component{
 		if(this.state.focus){
 			return (
 				<ListView
-					style={{ ...this.props.itemsContainerStyle }}
+					style={{ this.props.itemsContainerStyle === undefined ? styles.itemsContainerStyle : ...this.props.itemsContainerStyle }}
 					keyboardShouldPersistTaps="always"
 					dataSource={ds.cloneWithRows(this.state.listItems)}
 					renderRow={this.renderItems} />
@@ -87,7 +95,7 @@ export default class DropWc extends Component{
 		if(this.state.focus){
 			return (
 				<FlatList
-					style={{ ...this.props.itemsContainerStyle }}
+					style={{ this.props.itemsContainerStyle === undefined ? styles.itemsContainerStyle : ...this.props.itemsContainerStyle }}
 					keyboardShouldPersistTaps="always"
 					data={this.state.listItems}
 					keyExtractor={(item, index) => index.toString()}
@@ -101,9 +109,17 @@ export default class DropWc extends Component{
 	}
 
 	viewList = () => {
-		let styleInput = this.state.focus ? this.props.inputFocusStyle : this.props.containerStyle;
+		let	containerStyle = styles.containerStyle,
+			inputFocusStyle = styles.inputFocusStyle;
+		if( this.props.containerStyle !== undefined || this.props.containerStyle !== '' ){
+			containerStyle = ...this.props.containerStyle;
+		}
+		if( this.props.inputFocusStyle !== undefined || this.props.inputFocusStyle !== '' ){
+			inputFocusStyle = ...this.props.inputFocusStyle;
+		}
+		let styleInput = this.state.focus ? this.props.inputFocusStyle : containerStyle;
 		return(
-			<View keyboardShouldPersistTaps="always" style={{...this.props.containerStyle}}>
+			<View keyboardShouldPersistTaps="always" style={ containerStyle }>
 				<TextInput
 					underlineColorAndroid={this.props.underlineColorAndroid}
 					onFocus={() => {
@@ -163,3 +179,33 @@ export default class DropWc extends Component{
 		}
 	};
 }
+
+const styles = StyleSheet.create({
+	containerStyle: {
+		paddingTop: 5,
+		paddingLeft: 4,
+		paddingBottom: 5,
+		color: '#bbbbbb',
+		fontSize: 16
+	},
+	inputFocusStyle:{
+		borderColor: '#ebebeb',
+		borderWidth: 1,
+		borderRadius: 5
+	},
+	textInputStyle:{
+		padding: 5,
+		borderRadius: 5,
+		color: '#bbbbbb',
+	},
+	itemStyle:{
+		padding: 10,
+		marginTop: 2,
+		backgroundColor: '#ffffff',
+		borderBottomColor: '#ebebeb',
+		borderBottomWidth: 1,
+		borderRadius: 5
+	},
+	itemTextStyle:{ color: '#8350E7' },
+	itemsContainerStyle:{ flexDirection: 'row', borderColor: '#000' }
+});
